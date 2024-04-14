@@ -19,7 +19,7 @@ import {
   IconFilename,
 } from "./components/domain";
 import { Title } from "./components/typography";
-import { resizeImage } from "./utils";
+import { downloadBlob, resizeImage, zipImages } from "./utils";
 
 const IconPresets = {
   Default: [16, 32, 64, 128, 256, 512],
@@ -36,9 +36,15 @@ function App() {
 
     return IconPresets[iconPreset].map((size) => ({
       size,
+      name: `icon-${size}x${size}.png`,
       image: resizeImage(icon, size, size),
     }));
   }, [icon, iconPreset]);
+
+  const download = async () => {
+    const zipBlob = await zipImages(resizedIcons);
+    downloadBlob(zipBlob, "resized-icons.zip");
+  };
 
   return (
     <Page>
@@ -75,16 +81,16 @@ function App() {
             <FinderHeader>
               <IconNameInput>Resized Icons</IconNameInput>
 
-              <IconDownloadButton>Download</IconDownloadButton>
+              <IconDownloadButton onClick={download}>
+                Download
+              </IconDownloadButton>
             </FinderHeader>
 
             <FinderContent>
-              {resizedIcons.map(({ size, image }, index) => (
+              {resizedIcons.map(({ name, image }, index) => (
                 <IconFile key={index}>
                   <IconFilePreview image={image} />
-                  <IconFilename>
-                    icon-{size}x{size}.png
-                  </IconFilename>
+                  <IconFilename>{name}</IconFilename>
                 </IconFile>
               ))}
             </FinderContent>
