@@ -21,17 +21,24 @@ import {
 import { Title } from "./components/typography";
 import { resizeImage } from "./utils";
 
+const IconPresets = {
+  Default: [16, 32, 64, 128, 256, 512],
+  ChromeExt: [16, 48, 128],
+};
+type IconPreset = keyof typeof IconPresets;
+
 function App() {
   const [icon, setIcon] = useState<HTMLImageElement | null>(null);
-  const [IconSizes] = useState([16, 32, 64, 128, 256, 512]);
+  const [iconPreset, setIconPreset] = useState<IconPreset>("Default");
+
   const resizedIcons = useMemo(() => {
     if (!icon) return [];
 
-    return IconSizes.map((size) => ({
+    return IconPresets[iconPreset].map((size) => ({
       size,
       image: resizeImage(icon, size, size),
     }));
-  }, [icon, IconSizes]);
+  }, [icon, iconPreset]);
 
   return (
     <Page>
@@ -50,9 +57,18 @@ function App() {
           <FinderTrafficLight />
 
           <FinderSidebar>
-            <FinderSidebarItem>Default</FinderSidebarItem>
-            <FinderSidebarItem>Chrome Ext.</FinderSidebarItem>
-            <FinderSidebarItem>Favicon</FinderSidebarItem>
+            <FinderSidebarItem
+              selected={iconPreset === "Default"}
+              onClick={() => setIconPreset("Default")}
+            >
+              Default
+            </FinderSidebarItem>
+            <FinderSidebarItem
+              selected={iconPreset === "ChromeExt"}
+              onClick={() => setIconPreset("ChromeExt")}
+            >
+              Chrome Ext.
+            </FinderSidebarItem>
           </FinderSidebar>
 
           <FinderMain>
