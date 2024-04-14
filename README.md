@@ -1,30 +1,32 @@
-# React + TypeScript + Vite
+# Icon Resizer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+App Link: [icon-resizer.surge.sh](https://icon-resizer.surge.sh/)
 
-Currently, two official plugins are available:
+![icon resizer screenshot](https://github.com/16Yongjin/icon-resizer/assets/22253556/f77a34d6-0f3f-4916-9c92-4fa0c35c1679)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## How To Use
 
-## Expanding the ESLint configuration
+1. Upload your icon image.
+2. Click **Download** to download zip file for resized images.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Alternatives
 
-- Configure the top-level `parserOptions` property like this:
+### 1. Favicon Generator
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+- [www.favicon-generator.org/](https://www.favicon-generator.org/)
+
+### 2. MacOS Command line to resize image
+
+```sh
+sips -Z 16 {IMAGE_PATH} -o icon-16.png
+sips -Z 32 {IMAGE_PATH} -o icon-32.png
+sips -Z 64 {IMAGE_PATH} -o icon-64.png
+sips -Z 128 {IMAGE_PATH} -o icon-128.png
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Tech Stack
+
+- React
+- Tailwind
+
+It took 4 hours to make.
