@@ -11,5 +11,6 @@ export * from "./IconFile";
 export * from "./IconFilename";
 export * from "./IconFilePreview";
 export * from "./IconNameInput";
+export * from "./IconPreview";
 export * from "./IconUpload";
 export * from "./IconUploadSection";

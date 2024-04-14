@@ -1,32 +1,49 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 type Props = {
   children?: React.ReactNode;
-  onChange?: (icon: string) => void;
+  icon?: HTMLImageElement | null;
+  onChange?: (icon: HTMLImageElement) => void;
 };
 
-export const IconUpload: React.FC<Props> = ({ onChange }) => {
+const readImage = (file: File): Promise<HTMLImageElement> => {
+  return new Promise((resolve) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.src = URL.createObjectURL(file);
+  });
+};
+
+export const IconUpload: React.FC<Props> = ({ children, onChange }) => {
   const $fileInput = useRef<HTMLInputElement>(null);
 
-  const onFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = reader.result as string;
-      console.log(result);
-      onChange?.(result);
-    };
-    reader.readAsDataURL(file);
+    const image = await readImage(file);
+    onChange?.(image);
   };
+
+  // Upload default icon for testing
+  useEffect(() => {
+    const image = new Image();
+    image.onload = () => {
+      console.log(image);
+      onChange?.(image);
+    };
+    image.src = "/test-icon.png";
+  }, []);
 
   return (
     <>
       <div
-        className="h-32 w-32 cursor-pointer rounded-lg bg-slate-100"
+        className="h-32 w-32 cursor-pointer rounded-lg bg-slate-100 shadow"
         onClick={() => $fileInput.current?.click()}
-      ></div>
+      >
+        {children}
+      </div>
+
       <input
         type="file"
         ref={$fileInput}

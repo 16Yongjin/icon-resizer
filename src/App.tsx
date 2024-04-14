@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import { Page, Header } from "./components/layouts";
 import {
   IconUploadSection,
@@ -10,23 +11,38 @@ import {
   FinderHeader,
   FinderMain,
   IconNameInput,
+  IconPreview,
   IconDownloadButton,
   FinderContent,
   IconFile,
   IconFilePreview,
   IconFilename,
 } from "./components/domain";
-import { useState } from "react";
+import { Title } from "./components/typography";
+import { resizeImage } from "./utils";
 
 function App() {
-  const [icon, setIcon] = useState<string | null>(null);
+  const [icon, setIcon] = useState<HTMLImageElement | null>(null);
+  const [IconSizes] = useState([16, 32, 64, 128, 256, 512]);
+  const resizedIcons = useMemo(() => {
+    if (!icon) return [];
+
+    return IconSizes.map((size) => ({
+      size,
+      image: resizeImage(icon, size, size),
+    }));
+  }, [icon, IconSizes]);
 
   return (
     <Page>
       <Header>Icon Resizer</Header>
 
       <IconUploadSection>
-        <IconUpload onChange={setIcon} />
+        <Title>Your Icon</Title>
+
+        <IconUpload onChange={setIcon}>
+          <IconPreview icon={icon} />
+        </IconUpload>
       </IconUploadSection>
 
       <IconDownloadSection>
@@ -41,16 +57,18 @@ function App() {
 
           <FinderMain>
             <FinderHeader>
-              <IconNameInput>Icon</IconNameInput>
+              <IconNameInput>Resized Icons</IconNameInput>
 
               <IconDownloadButton>Download</IconDownloadButton>
             </FinderHeader>
 
             <FinderContent>
-              {Array.from({ length: 20 }).map((_, index) => (
+              {resizedIcons.map(({ size, image }, index) => (
                 <IconFile key={index}>
-                  <IconFilePreview />
-                  <IconFilename>icon-16x16.png</IconFilename>
+                  <IconFilePreview image={image} />
+                  <IconFilename>
+                    icon-{size}x{size}.png
+                  </IconFilename>
                 </IconFile>
               ))}
             </FinderContent>

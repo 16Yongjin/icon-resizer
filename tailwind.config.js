@@ -6,6 +6,9 @@ export default {
       borderWidth: {
         1: "1px",
       },
+      height: {
+        18: "4.5rem",
+      },
     },
   },
   plugins: [],

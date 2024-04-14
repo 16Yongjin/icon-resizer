@@ -3,5 +3,9 @@ type Props = {
 };
 
 export const IconUploadSection: React.FC<Props> = ({ children }) => {
-  return <div className="flex justify-center py-16">{children}</div>;
+  return (
+    <div className="flex flex-col items-center justify-center gap-2 py-12">
+      {children}
+    </div>
+  );
 };
