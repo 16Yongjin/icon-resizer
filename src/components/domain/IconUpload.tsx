@@ -27,6 +27,8 @@ export const IconUpload: React.FC<Props> = ({ children, onChange }) => {
 
   // Upload default icon for testing
   useEffect(() => {
+    if (!import.meta.env.DEV) return;
+
     const image = new Image();
     image.onload = () => onChange?.(image);
     image.src = "/test-icon.png";

@@ -5,6 +5,8 @@ import {
   IconUpload,
   IconDownloadSection,
   Finder,
+  FinderContent,
+  FinderContentMessage,
   FinderTrafficLight,
   FinderSidebar,
   FinderSidebarItem,
@@ -13,7 +15,6 @@ import {
   IconNameInput,
   IconPreview,
   IconDownloadButton,
-  FinderContent,
   IconFile,
   IconFilePreview,
   IconFilename,
@@ -87,12 +88,16 @@ function App() {
             </FinderHeader>
 
             <FinderContent>
-              {resizedIcons.map(({ name, image }, index) => (
-                <IconFile key={index}>
-                  <IconFilePreview image={image} />
-                  <IconFilename>{name}</IconFilename>
-                </IconFile>
-              ))}
+              {resizedIcons.length ? (
+                resizedIcons.map(({ name, image }, index) => (
+                  <IconFile key={index}>
+                    <IconFilePreview image={image} />
+                    <IconFilename>{name}</IconFilename>
+                  </IconFile>
+                ))
+              ) : (
+                <FinderContentMessage>No icons to display</FinderContentMessage>
+              )}
             </FinderContent>
           </FinderMain>
         </Finder>

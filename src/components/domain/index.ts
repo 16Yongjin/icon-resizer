@@ -1,5 +1,6 @@
 export * from "./Finder";
 export * from "./FinderContent";
+export * from "./FinderContentMessage";
 export * from "./FinderHeader";
 export * from "./FinderMain";
 export * from "./FinderSidebar";
