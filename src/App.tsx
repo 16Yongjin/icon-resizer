@@ -1,24 +1,63 @@
+import { Page, Header } from "./components/layouts";
+import {
+  IconUploadSection,
+  IconUpload,
+  IconDownloadSection,
+  Finder,
+  FinderTrafficLight,
+  FinderSidebar,
+  FinderSidebarItem,
+  FinderHeader,
+  FinderMain,
+  IconNameInput,
+  IconDownloadButton,
+  FinderContent,
+  IconFile,
+  IconFilePreview,
+  IconFilename,
+} from "./components/domain";
 import { useState } from "react";
-import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [icon, setIcon] = useState<string | null>(null);
 
   return (
-    <>
-      <h1 className="bg-red-500 font-bold">Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Page>
+      <Header>Icon Resizer</Header>
+
+      <IconUploadSection>
+        <IconUpload onChange={setIcon} />
+      </IconUploadSection>
+
+      <IconDownloadSection>
+        <Finder>
+          <FinderTrafficLight />
+
+          <FinderSidebar>
+            <FinderSidebarItem>Default</FinderSidebarItem>
+            <FinderSidebarItem>Chrome Ext.</FinderSidebarItem>
+            <FinderSidebarItem>Favicon</FinderSidebarItem>
+          </FinderSidebar>
+
+          <FinderMain>
+            <FinderHeader>
+              <IconNameInput>Icon</IconNameInput>
+
+              <IconDownloadButton>Download</IconDownloadButton>
+            </FinderHeader>
+
+            <FinderContent>
+              {Array.from({ length: 20 }).map((_, index) => (
+                <IconFile key={index}>
+                  <IconFilePreview />
+                  <IconFilename>icon-16x16.png</IconFilename>
+                </IconFile>
+              ))}
+            </FinderContent>
+          </FinderMain>
+        </Finder>
+      </IconDownloadSection>
+    </Page>
   );
 }
 
